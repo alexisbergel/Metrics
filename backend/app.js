@@ -1,23 +1,22 @@
 const express = require('express');
 const path = require('path');
 require('dotenv').config();
-
 const app = express();
 
-// Port depuis le .env ou 3000 par défaut
 const PORT = process.env.PORT || 3000;
 
-// Définir EJS comme moteur de template
+// Setup EJS engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Servir les fichiers statiques depuis /public
+// Middleware for static files
 app.use(express.static(path.join(__dirname, '../public')));
 
-// Middleware pour parser les données envoyées via formulaire
+// Middleware for parsing JSON and URL-encoded data
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Route simple de test
+// Simple route for testing
 app.get('/', (req, res) => {
   res.render('index', { title: 'Accueil' });
 });
