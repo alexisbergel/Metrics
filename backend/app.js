@@ -21,6 +21,10 @@ app.get('/', (req, res) => {
   res.render('index', { title: 'Accueil' });
 });
 
+// Test route to check if db connection works
+const dbTestRoute = require('./routes/dbtest');
+app.use('/dbtest', dbTestRoute);
+
 // Démarrage du serveur
 app.listen(PORT, () => {
   console.log(`Serveur lancé sur http://localhost:${PORT}`);
