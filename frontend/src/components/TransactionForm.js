@@ -2,20 +2,14 @@ import { useState } from 'react';
 
 export default function TransactionForm({ onAddTransaction }) {
     const [amount, setAmount] = useState('');
-    
-    const handleAdd = () => {
+
+    const addTransaction = (e, type) => {
+        e.preventDefault();
         if (!amount || isNaN(amount)) return;
 
-        onAddTransaction({type:'credit', amount: Number(amount)});
+        onAddTransaction({type: 'credit', amount: Number(amount)});
         setAmount('');
-    };
-
-    const handleSubstract = () => {
-        if (!amount || isNaN(amount)) return;
-
-        onAddTransaction({type:'debit', amount: Number(amount)});
-        setAmount('');
-    };
+    }
 
     return (
         <div className="transaction-form">
@@ -25,8 +19,8 @@ export default function TransactionForm({ onAddTransaction }) {
                 onChange={(e) => setAmount(e.target.value)}
                 placeholder="Amount"
             />
-            <button onClick={handleAdd}>+</button>
-            <button onClick={handleSubstract}>-</button>
+            <button onClick={ (e) => addTransaction(e, 'credit')}>+</button>
+            <button onClick={ (e) => addTransaction(e, 'debit')}>-</button>
         </div>
     );
 }
