@@ -2,8 +2,15 @@ const express = require('express');
 const path = require('path');
 require('dotenv').config();
 const app = express();
+const cors = require('cors');
+const router = require('./routes/index');
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
+
+// Setup CORS
+app.use(cors({
+  origin: 'http://localhost:3000',
+}));
 
 // Setup EJS engine
 app.set('view engine', 'ejs');
@@ -16,16 +23,19 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Simple route for testing
-app.get('/', (req, res) => {
-  res.render('index', { title: 'Accueil' });
+// Router
+app.use('/api', router);
+
+app.get('/test', (req, res) => {
+  console.log('Test route accessed');
+  res.send('Test route OK');
 });
 
-// Test route to check if db connection works
-const dbTestRoute = require('./routes/dbtest');
-app.use('/dbtest', dbTestRoute);
+// Error handling middleware
+const errorHandler = require('./middlewares/errorHandler');
+app.use(errorHandler);
 
 // Démarrage du serveur
 app.listen(PORT, () => {
-  console.log(`Serveur lancé sur http://localhost:${PORT}`);
+  console.log(`Server is running on http://localhost:${PORT}`);
 });

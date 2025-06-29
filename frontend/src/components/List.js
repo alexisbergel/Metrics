@@ -4,8 +4,7 @@ export default function List({ transactions }) {
     return(
         <div>
             {transactions.map((transaction, index) => (
-                <SingleTransaction transaction={transaction} />
-                //<SingleTransaction key={index} transaction={transaction} />
+                <SingleTransaction key={transaction.id} transaction={transaction} />
             ))}
         </div>
     );

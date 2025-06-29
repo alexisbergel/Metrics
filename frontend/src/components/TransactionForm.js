@@ -7,7 +7,8 @@ export default function TransactionForm({ onAddTransaction }) {
         e.preventDefault();
         if (!amount || isNaN(amount)) return;
 
-        onAddTransaction({type: 'credit', amount: Number(amount)});
+        // Amount, label, and type are required
+        onAddTransaction({type: type, amount: Number(amount) * 100});
         setAmount('');
     }
 
