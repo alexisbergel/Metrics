@@ -1,0 +1,67 @@
+.transactionForm {
+    display: flex;
+    gap: 1px;
+    margin-bottom: 12px;
+}
+
+.transactionForm > div {
+    background-color: #1B1B1B;
+}
+
+.inputs {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+    padding: 8px 11px;
+    border-radius: 12px 0 0 12px;
+}
+
+.inputs input {
+    min-width: 0;
+    flex: 1;
+
+    font-size: 0.875rem;
+    color: var(--text-color);
+    background-color: transparent;
+    border: none;
+}
+
+.inputs input::placeholder {
+    color: var(--secondary-color);
+}
+
+.inputs input:focus {
+    outline: none;
+}
+
+.inputs input[type="number"] {
+    text-align: right;
+}
+
+.buttons {
+    flex-basis: 56px;
+    padding: 8px;
+    border-radius: 0 12px 12px 0;
+}
+
+.buttons button:first-child .arrowIcon {
+    color: var(--green-color);
+}
+
+.buttons button:last-child .arrowIcon {
+    color: var(--red-color);
+    transform: rotate(180deg);
+}
+
+.buttons button {
+    width: 28px;
+    height: 28px;
+    
+    border-radius: 7px;
+    border: none;
+    background-color: transparent;
+}
+
+.buttons button:hover {
+    background-color: #2A2A2A;
+}

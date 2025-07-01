@@ -5,18 +5,30 @@
     --secondary-color: #878787;
     --text-color: #E0E0E0;
     --green-color: #75CE54;
+    --red-color: #CE5454;
+
+    --global-margin: 11px;
 }
 
 body {
     margin: 0;
     padding: 0;
     background-color: var(--main-color);
+}
 
+body, input {
     font-family: "Geist Mono", monospace;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	font-weight: normal;
 	font-style: normal;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
 }
 
 p, h1, h2, h3, h4, h5, h6 {
@@ -30,6 +42,8 @@ h1 {
     font-size: 0.875rem;
     text-transform: uppercase;
     color: var(--secondary-color);
+
+    margin-bottom: 12px;
 }
 
 h2 {

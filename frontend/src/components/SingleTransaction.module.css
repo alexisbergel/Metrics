@@ -1,5 +1,6 @@
 .transaction {
-    height: 44px;
+    height: 33px;
+    margin: var(--global-margin);
 
     display: flex;
     justify-content: space-between;
