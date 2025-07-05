@@ -1,12 +1,73 @@
 .transaction {
-    height: 33px;
-    margin: var(--global-margin);
+    position: relative;
+    margin-bottom: 12px;
 
+    --transaction-height: 32px;
+}
+
+.transaction:hover .transactionActions {
+    opacity: 1;
+}
+
+.transaction:hover .transactionContent {
+    background-color: #1B1B1B;
+}
+
+.transactionContent {
+    height: 20px;
+    padding: 6px 11px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    border-radius: 12px;
+}
+
+.transactionActions {
+    height: var(--transaction-height);
+    padding: 0 6px 0 6px;
+
+    position:absolute;
+    transform: translateX(100%);
+    right: 0;
+    top: 0;
+
+    opacity: 0;
+}
+
+.transactionActions button {
+    width: var(--transaction-height);
+    height: var(--transaction-height);
+
+    background-color: transparent;
+    border: none;
+    border-radius: 12px;
+}
+
+.transactionActions button:hover {
+    background-color: #1B1B1B;
+}
+
+.transactionActions .checkIcon {
+    color: var(--text-color);
 }
 
 .amountCredit {
     color: var(--green-color);
+}
+
+
+/* Executed transaction styles */
+
+.isExecuted .transactionActions .checkIcon {
+    color: var(--green-color);
+}
+
+.isExecuted .transactionContent p {
+    color: var(--secondary-color);
+    text-decoration: line-through;
+}
+
+.isExecuted .transactionActions .executeButton:hover {
+    background-color: var(--dark-green-color);
 }

@@ -24,3 +24,29 @@ exports.createTransaction = async (req, res, next) => {
         next(error);
     }
 }
+
+exports.editTransaction = async (req, res, next) => {
+    const { id } = req.params;
+    const { executed } = req.body;
+
+    if (typeof executed !== 'boolean') {
+        // TODO: write a custom error handler
+        return res.status(400).json({ message: 'Invalid executed status' });
+    }
+
+    try {
+        const result = await pool.query(
+            'UPDATE transactions SET executed = $1 WHERE id = $2 RETURNING *',
+            [executed, id]
+        );
+
+        if (result.rows.length === 0) {
+            // TODO: write a custom error handler
+            return res.status(404).json({ message: 'Transaction not found' });
+        }
+
+        res.json(result.rows[0]);
+    } catch (error) {
+        next(error);
+    }
+}

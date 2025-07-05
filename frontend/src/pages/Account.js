@@ -6,7 +6,6 @@ import styles from "./Account.module.css";
 
 export default function Account() {
     const [transactions, setTransactions] = useState([]);
-    const [total, setTotal] = useState(0);
 
     // Fetch transactions from the API
     useEffect(() => {
@@ -16,14 +15,26 @@ export default function Account() {
         .catch((error) => console.error(error));
     }, []);
 
+    let totalAmount = 0;
+    let executedTotalAmount = 0;
+
+    transactions.forEach(transaction => {
+      const amount = transaction.type === 'credit' ? transaction.amount : -transaction.amount;
+      totalAmount += amount;
+      if (transaction.executed) executedTotalAmount += amount;
+    });
+
+    totalAmount = totalAmount / 100;
+    executedTotalAmount = executedTotalAmount / 100;
+
     // Calculate the total amount from transactions
-    useEffect(() => {
-      const totalAmount = transactions.reduce((acc, transaction) => {
+    /*let totalAmount = transactions.reduce((acc, transaction) => {
         return transaction.type === 'credit' ? acc + transaction.amount : acc - transaction.amount;
       }, 0);
-      setTotal(totalAmount / 100);
-    }, [transactions]);
-    
+    totalAmount = totalAmount / 100;*/
+
+
+
     // Function to add a new transaction
     const addTransaction = (newTransaction) => {
       fetch('http://localhost:3001/api/transactions', {
@@ -40,13 +51,39 @@ export default function Account() {
         .catch((error) => console.error(error));
     }
 
+    // Function to toggle the execution state of a transaction
+    const toggleExecute = async (id, newState) => {
+      try {
+        const response = await fetch(`http://localhost:3001/api/transactions/${id}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ executed: newState }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const updatedTransaction = await response.json();
+
+        setTransactions(transactions.map(transaction => 
+          transaction.id === id ? updatedTransaction : transaction
+        ));
+
+      } catch (error) {
+        console.error("Error updating transaction execution state:", error);
+        throw error; // Re-throw the error to be handled by the caller
+      }
+    }
+
     return (
-    <div className={styles.account}>
-      <Header total={total}/>
-      <TransactionForm onAddTransaction={addTransaction}/>
-      
-      <div>
-        <List transactions={transactions}/>
+    <div>
+      <div className={styles.account}>
+        <Header totalAmount={totalAmount} executedTotalAmount={executedTotalAmount}/>
+        <TransactionForm onAddTransaction={addTransaction}/>
+        <List transactions={transactions} onToggleExecute={toggleExecute}/>
       </div>
     </div>
     );

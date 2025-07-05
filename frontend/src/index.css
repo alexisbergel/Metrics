@@ -5,9 +5,10 @@
     --secondary-color: #878787;
     --text-color: #E0E0E0;
     --green-color: #75CE54;
+    --dark-green-color: #1E2720;
     --red-color: #CE5454;
 
-    --global-margin: 11px;
+    --max-width: 340px;
 }
 
 body {
@@ -31,11 +32,17 @@ input[type=number]::-webkit-outer-spin-button {
     margin: 0; 
 }
 
+button {
+    margin: 0;
+    padding: 0;
+}
+
 p, h1, h2, h3, h4, h5, h6 {
     margin: 0;
     padding: 0;
     color: var(--text-color);
     font-weight: 400;
+    cursor: default;
 }
 
 h1 {
@@ -48,6 +55,12 @@ h1 {
 
 h2 {
     font-size: 1.4375rem;
+    margin-bottom: 4px;
+}
+
+h3 {
+    font-size: 0.9375rem;
+    color: var(--secondary-color);
 }
 
 p {
